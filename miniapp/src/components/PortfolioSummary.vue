@@ -1,16 +1,16 @@
 <template>
-  <div class="glass-card p-5 animate-slide-up">
+  <div class="bg-dark-card border border-dark-border rounded-xl p-5 animate-slide-up">
     <!-- Value Display -->
     <div class="flex justify-between items-start mb-4">
       <div>
-        <p class="text-tg-hint text-sm mb-1">Portfolio Value</p>
-        <h2 class="text-3xl font-bold tracking-tight">
+        <p class="text-dark-hint text-sm mb-1">Portfolio Value</p>
+        <h2 class="text-3xl font-bold tracking-tight text-dark-text">
           <span class="font-mono">${{ formatNumber(totalValue) }}</span>
         </h2>
       </div>
       <div 
         class="px-3 py-1.5 rounded-lg text-sm font-semibold flex items-center gap-1"
-        :class="dayChange >= 0 ? 'bg-profit/20 text-profit' : 'bg-loss/20 text-loss'"
+        :class="dayChange >= 0 ? 'bg-profit/15 text-profit' : 'bg-loss/15 text-loss'"
       >
         <svg class="w-4 h-4" :class="dayChange >= 0 ? '' : 'rotate-180'" viewBox="0 0 24 24" fill="currentColor">
           <path d="M12 4l-8 8h5v8h6v-8h5z"/>
@@ -21,7 +21,7 @@
 
     <!-- Day Change -->
     <div class="flex items-center gap-2 mb-5">
-      <span class="text-tg-hint text-sm">Today:</span>
+      <span class="text-dark-hint text-sm">Today:</span>
       <span 
         class="font-mono font-semibold"
         :class="dayChange >= 0 ? 'text-profit' : 'text-loss'"
@@ -33,11 +33,11 @@
     <!-- Risk Gauge -->
     <div class="mt-4">
       <div class="flex justify-between items-center mb-2">
-        <span class="text-sm text-tg-hint">Portfolio Risk</span>
+        <span class="text-sm text-dark-hint">Portfolio Risk</span>
         <span class="text-sm font-semibold" :class="riskColor">{{ riskLabel }}</span>
       </div>
       <div class="risk-gauge" :style="{ '--risk-level': riskLevel + '%' }"></div>
-      <div class="flex justify-between text-xs text-tg-hint mt-1">
+      <div class="flex justify-between text-xs text-dark-hint mt-1">
         <span>Low</span>
         <span>Moderate</span>
         <span>High</span>
@@ -45,12 +45,12 @@
     </div>
 
     <!-- Mini Sparkline -->
-    <div class="mt-5 h-16 relative overflow-hidden rounded-lg">
+    <div class="mt-5 h-16 relative overflow-hidden rounded-lg bg-dark-secondary">
       <svg class="w-full h-full" preserveAspectRatio="none" viewBox="0 0 100 40">
         <defs>
           <linearGradient id="sparkGradient" x1="0%" y1="0%" x2="0%" y2="100%">
-            <stop offset="0%" :stop-color="dayChange >= 0 ? '#00d26a' : '#ff4757'" stop-opacity="0.3"/>
-            <stop offset="100%" :stop-color="dayChange >= 0 ? '#00d26a' : '#ff4757'" stop-opacity="0"/>
+            <stop offset="0%" :stop-color="dayChange >= 0 ? '#00d26a' : '#ff3b3b'" stop-opacity="0.2"/>
+            <stop offset="100%" :stop-color="dayChange >= 0 ? '#00d26a' : '#ff3b3b'" stop-opacity="0"/>
           </linearGradient>
         </defs>
         <path 
@@ -61,8 +61,8 @@
         <path 
           :d="sparklineStroke" 
           fill="none" 
-          :stroke="dayChange >= 0 ? '#00d26a' : '#ff4757'" 
-          stroke-width="2"
+          :stroke="dayChange >= 0 ? '#00d26a' : '#ff3b3b'" 
+          stroke-width="1.5"
           stroke-linecap="round"
           stroke-linejoin="round"
           class="transition-all duration-500"
@@ -70,8 +70,8 @@
       </svg>
       <!-- Animated dot at end -->
       <div 
-        class="absolute w-3 h-3 rounded-full animate-pulse"
-        :class="dayChange >= 0 ? 'bg-profit glow-profit' : 'bg-loss glow-loss'"
+        class="absolute w-2 h-2 rounded-full"
+        :class="dayChange >= 0 ? 'bg-profit' : 'bg-loss'"
         :style="{ right: '4px', top: lastPointY + 'px' }"
       ></div>
     </div>

@@ -1,6 +1,6 @@
 <template>
-  <div class="glass-card p-5">
-    <h3 class="font-semibold mb-4">Asset Allocation</h3>
+  <div class="bg-dark-card border border-dark-border rounded-xl p-5">
+    <h3 class="font-semibold text-dark-text mb-4">Asset Allocation</h3>
 
     <!-- Donut Chart -->
     <div class="relative flex justify-center items-center h-48">
@@ -8,8 +8,8 @@
       
       <!-- Center text -->
       <div class="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
-        <p class="text-xs text-tg-hint">Total</p>
-        <p class="text-xl font-bold font-mono">${{ formatNumber(totalValue) }}</p>
+        <p class="text-xs text-dark-hint">Total</p>
+        <p class="text-xl font-bold font-mono text-dark-text">${{ formatNumber(totalValue) }}</p>
       </div>
     </div>
 
@@ -18,17 +18,17 @@
       <div 
         v-for="(item, index) in allocationData" 
         :key="item.symbol"
-        class="flex items-center gap-2 p-2 rounded-lg bg-dark-border/20"
+        class="flex items-center gap-2 p-2 rounded-lg bg-dark-secondary"
       >
         <div 
-          class="w-3 h-3 rounded-full"
+          class="w-2 h-2 rounded-full"
           :style="{ backgroundColor: colors[index] }"
         ></div>
         <div class="flex-1 min-w-0">
-          <p class="text-sm font-medium truncate">{{ item.symbol }}</p>
-          <p class="text-xs text-tg-hint">{{ item.percentage.toFixed(1) }}%</p>
+          <p class="text-sm font-medium text-dark-text truncate">{{ item.symbol }}</p>
+          <p class="text-xs text-dark-hint">{{ item.percentage.toFixed(1) }}%</p>
         </div>
-        <p class="text-xs font-mono text-tg-hint">${{ formatNumber(item.value) }}</p>
+        <p class="text-xs font-mono text-dark-hint">${{ formatNumber(item.value) }}</p>
       </div>
     </div>
 

@@ -1,7 +1,7 @@
 <template>
-  <div class="glass-card p-5">
+  <div class="bg-dark-card border border-dark-border rounded-xl p-5">
     <div class="flex items-center justify-between mb-4">
-      <h3 class="font-semibold">Portfolio Performance</h3>
+      <h3 class="font-semibold text-dark-text">Portfolio Performance</h3>
       <div class="flex gap-1">
         <button 
           v-for="period in periods" 
@@ -9,8 +9,8 @@
           @click="selectedPeriod = period.value"
           class="px-3 py-1 rounded-lg text-xs font-medium transition-all"
           :class="selectedPeriod === period.value 
-            ? 'bg-accent text-white' 
-            : 'bg-dark-border/30 text-tg-hint hover:bg-dark-border/50'"
+            ? 'bg-profit text-dark' 
+            : 'bg-dark-secondary text-dark-hint hover:bg-dark-border'"
         >
           {{ period.label }}
         </button>
@@ -23,18 +23,18 @@
     </div>
 
     <!-- Stats below chart -->
-    <div class="grid grid-cols-3 gap-4 mt-4 pt-4 border-t border-dark-border/30">
+    <div class="grid grid-cols-3 gap-4 mt-4 pt-4 border-t border-dark-border">
       <div class="text-center">
-        <p class="text-xs text-tg-hint mb-1">High</p>
+        <p class="text-xs text-dark-hint mb-1">High</p>
         <p class="font-mono font-semibold text-profit">${{ formatNumber(stats.high) }}</p>
       </div>
       <div class="text-center">
-        <p class="text-xs text-tg-hint mb-1">Low</p>
+        <p class="text-xs text-dark-hint mb-1">Low</p>
         <p class="font-mono font-semibold text-loss">${{ formatNumber(stats.low) }}</p>
       </div>
       <div class="text-center">
-        <p class="text-xs text-tg-hint mb-1">Avg</p>
-        <p class="font-mono font-semibold">${{ formatNumber(stats.avg) }}</p>
+        <p class="text-xs text-dark-hint mb-1">Avg</p>
+        <p class="font-mono font-semibold text-dark-text">${{ formatNumber(stats.avg) }}</p>
       </div>
     </div>
   </div>

@@ -2,49 +2,48 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Base styles */
+/* Base styles - Dark Trading Terminal */
 :root {
-  --gradient-profit: linear-gradient(135deg, #00d26a 0%, #00b894 100%);
-  --gradient-loss: linear-gradient(135deg, #ff4757 0%, #ff6b81 100%);
-  --gradient-accent: linear-gradient(135deg, #6c5ce7 0%, #a29bfe 100%);
-  --gradient-dark: linear-gradient(180deg, #1a1a2e 0%, #0f0f23 100%);
-  --gradient-card: linear-gradient(145deg, rgba(45, 45, 68, 0.5) 0%, rgba(26, 26, 46, 0.8) 100%);
-  --glass: rgba(255, 255, 255, 0.05);
-  --glass-border: rgba(255, 255, 255, 0.1);
+  --bg-primary: #0d0d0d;
+  --bg-secondary: #141414;
+  --bg-card: #1a1a1a;
+  --border-color: #2a2a2a;
+  --text-primary: #e5e5e5;
+  --text-secondary: #9a9a9a;
+  --text-hint: #6b6b6b;
+  --profit: #00d26a;
+  --profit-light: #00ff88;
+  --loss: #ff3b3b;
+  --warning: #f0b90b;
 }
 
-/* Glass morphism card */
+/* Dark terminal card */
 .glass-card {
-  @apply bg-dark-card/80 backdrop-blur-md rounded-2xl border border-dark-border/50;
-  background: var(--gradient-card);
+  @apply rounded-xl border;
+  background: var(--bg-card);
+  border-color: var(--border-color);
 }
 
-/* Glowing elements */
+/* Glowing elements - subtle */
 .glow-profit {
-  box-shadow: 0 0 20px rgba(0, 210, 106, 0.3), 0 0 40px rgba(0, 210, 106, 0.1);
+  box-shadow: 0 0 10px rgba(0, 210, 106, 0.2);
 }
 
 .glow-loss {
-  box-shadow: 0 0 20px rgba(255, 71, 87, 0.3), 0 0 40px rgba(255, 71, 87, 0.1);
+  box-shadow: 0 0 10px rgba(255, 59, 59, 0.2);
 }
 
 .glow-accent {
-  box-shadow: 0 0 20px rgba(108, 92, 231, 0.3), 0 0 40px rgba(108, 92, 231, 0.1);
+  box-shadow: 0 0 10px rgba(0, 210, 106, 0.2);
 }
 
-/* Gradient text */
+/* Gradient text - profit only */
 .gradient-text {
-  background: var(--gradient-accent);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  color: var(--profit);
 }
 
 .gradient-text-profit {
-  background: var(--gradient-profit);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  color: var(--profit);
 }
 
 /* Shimmer effect */
@@ -59,28 +58,28 @@
   animation: shimmer 2s linear infinite;
 }
 
-/* Button styles */
+/* Button styles - Clean terminal style */
 .btn-primary {
-  @apply px-6 py-3 rounded-xl font-semibold text-white transition-all duration-300;
-  background: var(--gradient-accent);
+  @apply px-6 py-3 rounded-lg font-semibold transition-all duration-200;
+  background: var(--profit);
+  color: #000000;
 }
 
 .btn-primary:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 10px 30px rgba(108, 92, 231, 0.4);
+  background: var(--profit-light);
 }
 
 .btn-primary:active {
-  transform: translateY(0);
+  transform: scale(0.98);
 }
 
-/* Risk gauge */
+/* Risk gauge - Simple bar */
 .risk-gauge {
   position: relative;
   width: 100%;
-  height: 8px;
-  border-radius: 4px;
-  background: linear-gradient(90deg, #00d26a 0%, #ffa502 50%, #ff4757 100%);
+  height: 4px;
+  border-radius: 2px;
+  background: var(--border-color);
   overflow: visible;
 }
 
@@ -89,11 +88,11 @@
   position: absolute;
   top: 50%;
   transform: translate(-50%, -50%);
-  width: 16px;
-  height: 16px;
+  width: 12px;
+  height: 12px;
   border-radius: 50%;
-  background: white;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+  background: var(--profit);
+  box-shadow: 0 0 8px rgba(0, 210, 106, 0.4);
   left: var(--risk-level, 50%);
   transition: left 0.5s ease-out;
 }
@@ -122,14 +121,15 @@
 
 /* Tab indicator */
 .tab-indicator {
-  @apply absolute bottom-0 h-0.5 bg-accent transition-all duration-300 rounded-full;
+  @apply absolute bottom-0 h-0.5 transition-all duration-300 rounded-full;
+  background: var(--profit);
 }
 
-/* Floating action button */
+/* Floating action button - Clean */
 .fab {
-  @apply fixed bottom-6 right-6 w-14 h-14 rounded-full flex items-center justify-center shadow-lg z-50;
-  background: var(--gradient-accent);
-  animation: float 3s ease-in-out infinite;
+  @apply fixed bottom-24 right-4 w-12 h-12 rounded-full flex items-center justify-center shadow-lg z-50;
+  background: var(--profit);
+  color: #000000;
 }
 
 /* Pull to refresh */

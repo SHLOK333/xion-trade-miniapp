@@ -1,20 +1,19 @@
 <template>
   <div 
-    class="glass-card p-4 flex items-start gap-3 cursor-pointer active:scale-[0.98] transition-transform"
+    class="bg-dark-card border border-dark-border rounded-xl p-4 flex items-start gap-3 cursor-pointer active:scale-[0.98] transition-transform"
     :class="borderClass"
   >
     <!-- Icon -->
     <div 
-      class="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0"
-      :class="iconBgClass"
+      class="w-9 h-9 rounded-lg flex items-center justify-center flex-shrink-0 bg-dark-secondary"
     >
-      <component :is="alertIcon" class="w-5 h-5 text-white" />
+      <component :is="alertIcon" class="w-5 h-5" :class="iconColorClass" />
     </div>
 
     <!-- Content -->
     <div class="flex-1 min-w-0">
       <div class="flex items-center gap-2 mb-1">
-        <h4 class="font-semibold text-sm truncate">{{ alert.title }}</h4>
+        <h4 class="font-semibold text-sm text-dark-text truncate">{{ alert.title }}</h4>
         <span 
           class="px-1.5 py-0.5 rounded text-[10px] font-medium uppercase flex-shrink-0"
           :class="urgencyClass"
@@ -22,12 +21,12 @@
           {{ alert.urgency }}
         </span>
       </div>
-      <p class="text-xs text-tg-hint leading-relaxed">{{ alert.message }}</p>
-      <p class="text-[10px] text-tg-hint/60 mt-1">{{ alert.time }}</p>
+      <p class="text-xs text-dark-hint leading-relaxed">{{ alert.message }}</p>
+      <p class="text-[10px] text-dark-hint mt-1">{{ alert.time }}</p>
     </div>
 
     <!-- Arrow -->
-    <svg class="w-5 h-5 text-tg-hint flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+    <svg class="w-5 h-5 text-dark-hint flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
       <path d="M9 5l7 7-7 7" stroke-linecap="round" stroke-linejoin="round"/>
     </svg>
   </div>
@@ -42,21 +41,21 @@ const props = defineProps({
 
 const borderClass = computed(() => {
   const classes = {
-    high: 'border-l-4 border-l-loss',
-    medium: 'border-l-4 border-l-warning',
-    low: 'border-l-4 border-l-accent',
+    high: 'border-l-2 border-l-loss',
+    medium: 'border-l-2 border-l-warning',
+    low: 'border-l-2 border-l-profit',
   }
   return classes[props.alert.urgency] || ''
 })
 
-const iconBgClass = computed(() => {
+const iconColorClass = computed(() => {
   const classes = {
-    warning: 'bg-warning/20',
-    success: 'bg-profit/20',
-    error: 'bg-loss/20',
-    info: 'bg-accent/20',
+    warning: 'text-warning',
+    success: 'text-profit',
+    error: 'text-loss',
+    info: 'text-profit',
   }
-  return classes[props.alert.type] || 'bg-accent/20'
+  return classes[props.alert.type] || 'text-profit'
 })
 
 const urgencyClass = computed(() => {

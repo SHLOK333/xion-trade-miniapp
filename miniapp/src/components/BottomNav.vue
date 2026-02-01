@@ -1,20 +1,20 @@
 <template>
-  <nav class="fixed bottom-0 left-0 right-0 bg-dark/95 backdrop-blur-lg border-t border-dark-border/30 safe-bottom z-50">
+  <nav class="fixed bottom-0 left-0 right-0 bg-dark border-t border-dark-border safe-bottom z-50">
     <div class="flex justify-around items-center py-2">
       <button 
         v-for="item in navItems" 
         :key="item.id"
         @click="$emit('change', item.id)"
-        class="flex flex-col items-center gap-1 py-2 px-4 rounded-xl transition-all"
-        :class="activeTab === item.id ? 'text-accent' : 'text-tg-hint'"
+        class="flex flex-col items-center gap-1 py-2 px-4 rounded-lg transition-all relative"
+        :class="activeTab === item.id ? 'text-profit' : 'text-dark-hint'"
       >
-        <component :is="item.icon" class="w-6 h-6" />
+        <component :is="item.icon" class="w-5 h-5" />
         <span class="text-[10px] font-medium">{{ item.label }}</span>
         
         <!-- Active indicator -->
         <div 
           v-if="activeTab === item.id"
-          class="absolute -top-0.5 w-8 h-1 rounded-full bg-accent"
+          class="absolute -top-0.5 w-6 h-0.5 rounded-full bg-profit"
         ></div>
       </button>
     </div>

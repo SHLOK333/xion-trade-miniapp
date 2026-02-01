@@ -1,34 +1,33 @@
 <template>
   <div 
-    class="position-card cursor-pointer"
+    class="bg-dark-card border border-dark-border rounded-xl p-4 cursor-pointer hover:border-dark-hint transition-colors"
     @click="$emit('click', position)"
   >
     <div class="flex items-center justify-between">
       <!-- Left: Symbol & Name -->
       <div class="flex items-center gap-3">
         <div 
-          class="w-12 h-12 rounded-xl flex items-center justify-center text-lg font-bold"
-          :class="logoClass"
+          class="w-10 h-10 rounded-lg bg-dark-secondary flex items-center justify-center text-sm font-bold text-dark-text"
         >
           {{ position.symbol.slice(0, 2) }}
         </div>
         <div>
           <div class="flex items-center gap-2">
-            <h3 class="font-semibold text-base">{{ position.symbol }}</h3>
+            <h3 class="font-semibold text-sm text-dark-text">{{ position.symbol }}</h3>
             <span 
               class="px-1.5 py-0.5 rounded text-[10px] font-medium uppercase"
-              :class="actionBadgeClass"
+              :class="position.action === 'buy' ? 'bg-profit/15 text-profit' : 'bg-loss/15 text-loss'"
             >
               {{ position.action }}
             </span>
           </div>
-          <p class="text-xs text-tg-hint">{{ position.quantity }} shares</p>
+          <p class="text-xs text-dark-hint">{{ position.quantity }} shares</p>
         </div>
       </div>
 
       <!-- Right: Price & P&L -->
       <div class="text-right">
-        <p class="font-mono font-semibold">${{ formatNumber(position.currentPrice) }}</p>
+        <p class="font-mono font-semibold text-sm text-dark-text">${{ formatNumber(position.currentPrice) }}</p>
         <p 
           class="text-sm font-mono"
           :class="position.pnl >= 0 ? 'text-profit' : 'text-loss'"
@@ -39,31 +38,21 @@
     </div>
 
     <!-- Mini chart preview -->
-    <div class="mt-3 h-10 relative">
+    <div class="mt-3 h-8 relative bg-dark-secondary rounded">
       <svg class="w-full h-full" preserveAspectRatio="none" viewBox="0 0 100 30">
-        <defs>
-          <linearGradient :id="'miniGrad' + position.symbol" x1="0%" y1="0%" x2="0%" y2="100%">
-            <stop offset="0%" :stop-color="position.pnl >= 0 ? '#00d26a' : '#ff4757'" stop-opacity="0.2"/>
-            <stop offset="100%" :stop-color="position.pnl >= 0 ? '#00d26a' : '#ff4757'" stop-opacity="0"/>
-          </linearGradient>
-        </defs>
-        <path 
-          :d="areaPath" 
-          :fill="'url(#miniGrad' + position.symbol + ')'"
-        />
         <path 
           :d="linePath" 
           fill="none" 
-          :stroke="position.pnl >= 0 ? '#00d26a' : '#ff4757'" 
-          stroke-width="1.5"
+          :stroke="position.pnl >= 0 ? '#00d26a' : '#ff3b3b'" 
+          stroke-width="1"
           stroke-linecap="round"
         />
       </svg>
     </div>
 
     <!-- Day change indicator -->
-    <div class="flex items-center justify-between mt-2 pt-2 border-t border-dark-border/30">
-      <span class="text-xs text-tg-hint">Today</span>
+    <div class="flex items-center justify-between mt-2 pt-2 border-t border-dark-border">
+      <span class="text-xs text-dark-hint">Today</span>
       <span 
         class="text-xs font-mono font-medium flex items-center gap-1"
         :class="position.dayChange >= 0 ? 'text-profit' : 'text-loss'"

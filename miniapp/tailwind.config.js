@@ -7,28 +7,33 @@ export default {
   theme: {
     extend: {
       colors: {
-        // Telegram theme colors
-        'tg-bg': 'var(--tg-theme-bg-color, #1a1a2e)',
-        'tg-text': 'var(--tg-theme-text-color, #ffffff)',
-        'tg-hint': 'var(--tg-theme-hint-color, #7a7a8c)',
-        'tg-link': 'var(--tg-theme-link-color, #6c5ce7)',
-        'tg-button': 'var(--tg-theme-button-color, #6c5ce7)',
-        'tg-button-text': 'var(--tg-theme-button-text-color, #ffffff)',
-        'tg-secondary': 'var(--tg-theme-secondary-bg-color, #16213e)',
+        // Telegram theme colors - Dark terminal style
+        'tg-bg': 'var(--tg-theme-bg-color, #0d0d0d)',
+        'tg-text': 'var(--tg-theme-text-color, #e5e5e5)',
+        'tg-hint': 'var(--tg-theme-hint-color, #6b6b6b)',
+        'tg-link': 'var(--tg-theme-link-color, #00d26a)',
+        'tg-button': 'var(--tg-theme-button-color, #00d26a)',
+        'tg-button-text': 'var(--tg-theme-button-text-color, #000000)',
+        'tg-secondary': 'var(--tg-theme-secondary-bg-color, #1a1a1a)',
         
-        // App colors
+        // App colors - Clean trading terminal
         'profit': '#00d26a',
-        'loss': '#ff4757',
-        'warning': '#ffa502',
-        'accent': '#6c5ce7',
-        'accent-light': '#a29bfe',
-        'dark': '#0f0f23',
-        'dark-card': '#1a1a2e',
-        'dark-border': '#2d2d44',
+        'profit-light': '#00ff88',
+        'loss': '#ff3b3b',
+        'loss-light': '#ff5252',
+        'warning': '#f0b90b',
+        'accent': '#00d26a',
+        'accent-light': '#00ff88',
+        'dark': '#0d0d0d',
+        'dark-card': '#141414',
+        'dark-secondary': '#1a1a1a',
+        'dark-border': '#2a2a2a',
+        'dark-text': '#e5e5e5',
+        'dark-hint': '#6b6b6b',
       },
       fontFamily: {
-        'display': ['Inter', 'system-ui', 'sans-serif'],
-        'mono': ['JetBrains Mono', 'monospace'],
+        'display': ['-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'sans-serif'],
+        'mono': ['SF Mono', 'Monaco', 'Consolas', 'monospace'],
       },
       animation: {
         'pulse-slow': 'pulse 3s ease-in-out infinite',

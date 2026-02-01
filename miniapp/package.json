@@ -1,7 +1,7 @@
 {
-  "name": "paper-profit-miniapp",
+  "name": "xion-trade-miniapp",
   "version": "1.0.0",
-  "description": "Paper Profit Telegram Mini App - AI-Powered Trading",
+  "description": "XION Trade Strategies - Telegram Mini App for AI-Powered Risk-Aware Trading",
   "scripts": {
     "dev": "vite --host",
     "build": "vite build",

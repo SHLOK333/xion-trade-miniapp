@@ -6,15 +6,15 @@
       @click.self="$emit('close')"
     >
       <!-- Backdrop -->
-      <div class="absolute inset-0 bg-black/60 backdrop-blur-sm" @click="$emit('close')"></div>
+      <div class="absolute inset-0 bg-black/80" @click="$emit('close')"></div>
       
       <!-- Panel -->
-      <div class="absolute right-0 top-0 bottom-0 w-80 bg-dark-card shadow-2xl animate-slide-in">
+      <div class="absolute right-0 top-0 bottom-0 w-80 bg-dark-card border-l border-dark-border shadow-2xl animate-slide-in">
         <!-- Header -->
-        <div class="p-6 border-b border-dark-border/30">
+        <div class="p-6 border-b border-dark-border">
           <div class="flex items-center justify-between">
-            <h2 class="text-xl font-bold text-white">Settings</h2>
-            <button @click="$emit('close')" class="p-2 rounded-full bg-dark/50 text-tg-hint hover:text-white">
+            <h2 class="text-lg font-bold text-dark-text">Settings</h2>
+            <button @click="$emit('close')" class="p-2 rounded-lg bg-dark-secondary text-dark-hint hover:text-dark-text transition-colors">
               <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
               </svg>
@@ -26,16 +26,16 @@
         <div class="p-6 space-y-6 overflow-y-auto h-[calc(100%-80px)]">
           <!-- Risk Tolerance -->
           <div>
-            <h3 class="text-sm font-semibold text-white mb-3">Risk Tolerance</h3>
+            <h3 class="text-sm font-semibold text-dark-text mb-3">Risk Tolerance</h3>
             <div class="grid grid-cols-3 gap-2">
               <button 
                 v-for="level in riskLevels" 
                 :key="level.id"
                 @click="settings.riskLevel = level.id"
-                class="py-2 px-3 rounded-xl text-sm font-medium transition-all"
+                class="py-2 px-3 rounded-lg text-sm font-medium transition-all"
                 :class="settings.riskLevel === level.id 
                   ? level.activeClass 
-                  : 'bg-dark/50 text-tg-hint hover:text-white'"
+                  : 'bg-dark-secondary text-dark-hint hover:text-dark-text'"
               >
                 {{ level.label }}
               </button>
@@ -44,25 +44,25 @@
           
           <!-- Notifications -->
           <div>
-            <h3 class="text-sm font-semibold text-white mb-3">Notifications</h3>
+            <h3 class="text-sm font-semibold text-dark-text mb-3">Notifications</h3>
             <div class="space-y-3">
               <div 
                 v-for="notification in notifications" 
                 :key="notification.id"
-                class="flex items-center justify-between p-3 bg-dark/30 rounded-xl"
+                class="flex items-center justify-between p-3 bg-dark-secondary rounded-lg"
               >
                 <div>
-                  <p class="text-sm font-medium text-white">{{ notification.label }}</p>
-                  <p class="text-xs text-tg-hint">{{ notification.description }}</p>
+                  <p class="text-sm font-medium text-dark-text">{{ notification.label }}</p>
+                  <p class="text-xs text-dark-hint">{{ notification.description }}</p>
                 </div>
                 <button 
                   @click="notification.enabled = !notification.enabled"
-                  class="w-12 h-6 rounded-full transition-colors relative"
-                  :class="notification.enabled ? 'bg-accent' : 'bg-dark-border'"
+                  class="w-11 h-6 rounded-full transition-colors relative"
+                  :class="notification.enabled ? 'bg-profit' : 'bg-dark-border'"
                 >
                   <span 
-                    class="absolute top-1 w-4 h-4 rounded-full bg-white transition-transform"
-                    :class="notification.enabled ? 'left-7' : 'left-1'"
+                    class="absolute top-1 w-4 h-4 rounded-full bg-dark-text transition-transform"
+                    :class="notification.enabled ? 'left-6' : 'left-1'"
                   ></span>
                 </button>
               </div>
@@ -71,12 +71,12 @@
           
           <!-- Auto Trading -->
           <div>
-            <h3 class="text-sm font-semibold text-white mb-3">Auto Trading</h3>
-            <div class="bg-dark/30 rounded-xl p-4">
+            <h3 class="text-sm font-semibold text-dark-text mb-3">Auto Trading</h3>
+            <div class="bg-dark-secondary rounded-lg p-4">
               <div class="flex items-center justify-between mb-4">
                 <div>
-                  <p class="text-sm font-medium text-white">Enable Auto-Rebalance</p>
-                  <p class="text-xs text-tg-hint">Automatically rebalance portfolio</p>
+                  <p class="text-sm font-medium text-dark-text">Enable Auto-Rebalance</p>
+                  <p class="text-xs text-dark-hint">Automatically rebalance portfolio</p>
                 </div>
                 <button 
                   @click="settings.autoRebalance = !settings.autoRebalance"

@@ -1,19 +1,18 @@
 <template>
   <div class="py-4 px-4 overflow-x-auto scroll-x -mx-4">
-    <div class="flex gap-3 min-w-max px-4">
+    <div class="flex gap-2 min-w-max px-4">
       <button 
         v-for="action in actions" 
         :key="action.id"
         @click="$emit('action', action.id)"
-        class="flex flex-col items-center gap-2 p-4 rounded-2xl bg-dark-card/60 border border-dark-border/30 min-w-[80px] transition-all duration-200 active:scale-95"
+        class="flex flex-col items-center gap-2 p-3 rounded-xl bg-dark-card border border-dark-border min-w-[72px] transition-all duration-200 active:scale-95 hover:border-dark-hint"
       >
         <div 
-          class="w-12 h-12 rounded-xl flex items-center justify-center"
-          :class="action.bgClass"
+          class="w-10 h-10 rounded-lg flex items-center justify-center bg-dark-secondary"
         >
-          <component :is="action.icon" class="w-6 h-6 text-white" />
+          <component :is="action.icon" class="w-5 h-5 text-profit" />
         </div>
-        <span class="text-xs font-medium text-tg-hint">{{ action.label }}</span>
+        <span class="text-[10px] font-medium text-dark-hint">{{ action.label }}</span>
       </button>
     </div>
   </div>
@@ -65,10 +64,10 @@ const AIIcon = {
 }
 
 const actions = [
-  { id: 'rebalance', label: 'Rebalance', icon: RebalanceIcon, bgClass: 'bg-gradient-to-br from-accent to-accent-light' },
-  { id: 'analyze', label: 'Analyze', icon: AnalyzeIcon, bgClass: 'bg-gradient-to-br from-profit to-emerald-400' },
-  { id: 'alerts', label: 'Alerts', icon: AlertIcon, bgClass: 'bg-gradient-to-br from-warning to-amber-400' },
-  { id: 'trade', label: 'Trade', icon: TradeIcon, bgClass: 'bg-gradient-to-br from-blue-500 to-cyan-400' },
-  { id: 'ai', label: 'Ask AI', icon: AIIcon, bgClass: 'bg-gradient-to-br from-purple-500 to-pink-500' },
+  { id: 'rebalance', label: 'Rebalance', icon: RebalanceIcon },
+  { id: 'analyze', label: 'Analyze', icon: AnalyzeIcon },
+  { id: 'alerts', label: 'Alerts', icon: AlertIcon },
+  { id: 'trade', label: 'Trade', icon: TradeIcon },
+  { id: 'ai', label: 'Ask AI', icon: AIIcon },
 ]
 </script>

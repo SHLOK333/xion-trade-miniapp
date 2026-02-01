@@ -6,30 +6,29 @@
       @click.self="$emit('close')"
     >
       <!-- Backdrop -->
-      <div class="absolute inset-0 bg-black/60 backdrop-blur-sm"></div>
+      <div class="absolute inset-0 bg-black/80"></div>
       
       <!-- Modal Content -->
-      <div class="relative w-full max-h-[85vh] bg-dark-card rounded-t-[32px] overflow-hidden animate-slide-up">
+      <div class="relative w-full max-h-[85vh] bg-dark-card border-t border-dark-border rounded-t-2xl overflow-hidden animate-slide-up">
         <!-- Drag handle -->
         <div class="flex justify-center pt-3 pb-2">
-          <div class="w-12 h-1 rounded-full bg-dark-border/50"></div>
+          <div class="w-10 h-1 rounded-full bg-dark-border"></div>
         </div>
         
         <!-- Header -->
         <div class="px-6 pb-4 flex items-center justify-between">
-          <div class="flex items-center gap-4">
+          <div class="flex items-center gap-3">
             <div 
-              class="w-14 h-14 rounded-2xl flex items-center justify-center text-2xl font-bold"
-              :class="position.change >= 0 ? 'bg-green-500/20 text-green-400' : 'bg-red-500/20 text-red-400'"
+              class="w-12 h-12 rounded-lg flex items-center justify-center text-lg font-bold bg-dark-secondary text-dark-text"
             >
               {{ position.symbol.substring(0, 2) }}
             </div>
             <div>
-              <h2 class="text-xl font-bold text-white">{{ position.symbol }}</h2>
-              <p class="text-tg-hint text-sm">{{ position.name }}</p>
+              <h2 class="text-lg font-bold text-dark-text">{{ position.symbol }}</h2>
+              <p class="text-dark-hint text-sm">{{ position.name }}</p>
             </div>
           </div>
-          <button @click="$emit('close')" class="p-2 rounded-full bg-dark/50 text-tg-hint hover:text-white">
+          <button @click="$emit('close')" class="p-2 rounded-lg bg-dark-secondary text-dark-hint hover:text-dark-text transition-colors">
             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
             </svg>
@@ -37,25 +36,25 @@
         </div>
         
         <!-- Price Section -->
-        <div class="px-6 py-4 bg-dark/30">
+        <div class="px-6 py-4 bg-dark-secondary">
           <div class="flex justify-between items-center">
             <div>
-              <p class="text-3xl font-bold text-white">${{ position.currentPrice.toFixed(2) }}</p>
+              <p class="text-2xl font-bold text-dark-text">${{ position.currentPrice.toFixed(2) }}</p>
               <div class="flex items-center gap-2 mt-1">
                 <span 
                   class="text-sm font-semibold"
-                  :class="position.change >= 0 ? 'text-green-400' : 'text-red-400'"
+                  :class="position.change >= 0 ? 'text-profit' : 'text-loss'"
                 >
                   {{ position.change >= 0 ? '+' : '' }}{{ position.changePercent.toFixed(2) }}%
                 </span>
-                <span class="text-tg-hint text-sm">Today</span>
+                <span class="text-dark-hint text-sm">Today</span>
               </div>
             </div>
             <div class="text-right">
-              <p class="text-sm text-tg-hint">Total P&L</p>
+              <p class="text-sm text-dark-hint">Total P&L</p>
               <p 
-                class="text-xl font-bold"
-                :class="position.totalPnL >= 0 ? 'text-green-400' : 'text-red-400'"
+                class="text-lg font-bold"
+                :class="position.totalPnL >= 0 ? 'text-profit' : 'text-loss'"
               >
                 {{ position.totalPnL >= 0 ? '+' : '' }}${{ position.totalPnL.toFixed(2) }}
               </p>
@@ -70,10 +69,10 @@
               v-for="period in periods" 
               :key="period"
               @click="selectedPeriod = period"
-              class="px-3 py-1 rounded-full text-xs font-medium transition-all"
+              class="px-3 py-1 rounded-lg text-xs font-medium transition-all"
               :class="selectedPeriod === period 
-                ? 'bg-accent text-black' 
-                : 'bg-dark/50 text-tg-hint hover:text-white'"
+                ? 'bg-profit text-dark' 
+                : 'bg-dark-secondary text-dark-hint hover:text-dark-text'"
             >
               {{ period }}
             </button>

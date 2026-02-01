@@ -1,5 +1,5 @@
 /**
- * API Service for Paper Profit Mini App
+ * API Service for XION Trade Mini App
  * Connects to the FastAPI backend
  */
 

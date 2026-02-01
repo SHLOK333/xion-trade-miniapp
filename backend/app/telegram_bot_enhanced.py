@@ -1,5 +1,5 @@
 """
-Enhanced Paper Profit Telegram Bot with Real Data
+XION Trade Telegram Bot with Real Data
 
 Features:
 - Real-time stock prices from Yahoo Finance
@@ -27,8 +27,12 @@ from telegram.ext import (
     filters,
 )
 
-# Mini App URL (update with your actual deployed URL)
-MINI_APP_URL = os.getenv("MINI_APP_URL", "https://miniapp-8heglsxfd-shlok333s-projects.vercel.app")
+# Load environment variables
+from dotenv import load_dotenv
+load_dotenv()
+
+# Mini App URL (GitHub Pages)
+MINI_APP_URL = os.getenv("MINI_APP_URL", "https://shlok333.github.io/xion-trade-miniapp/?v=2")
 
 import yfinance as yf
 
@@ -228,10 +232,10 @@ def calculate_rsi(prices: List[float], period: int = 14) -> float:
     return rsi
 
 
-# ==================== ENHANCED BOT ====================
+# ==================== XION TRADE BOT ====================
 
-class EnhancedPaperProfitBot:
-    """Enhanced Telegram bot with real data and strategy-specific analysis"""
+class XionTradeBot:
+    """XION Trade Telegram bot with real data and strategy-specific analysis"""
     
     def __init__(self):
         self.application = None
@@ -239,9 +243,9 @@ class EnhancedPaperProfitBot:
     async def start(self, update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
         """Welcome message with all commands"""
         keyboard = [
-            [InlineKeyboardButton("� Open Trading Dashboard", web_app=WebAppInfo(url=MINI_APP_URL))],
-            [InlineKeyboardButton("�📊 Analyze Stock", callback_data="menu_analyze")],
-            [InlineKeyboardButton("📈 My Portfolio", callback_data="menu_portfolio")],
+            [InlineKeyboardButton("📊 Open Trading Dashboard", web_app=WebAppInfo(url=MINI_APP_URL))],
+            [InlineKeyboardButton("📈 Analyze Stock", callback_data="menu_analyze")],
+            [InlineKeyboardButton("💼 My Portfolio", callback_data="menu_portfolio")],
             [InlineKeyboardButton("🔄 Auto Rebalance", callback_data="menu_rebalance")],
             [InlineKeyboardButton("🎯 Strategies", callback_data="menu_strategies")],
             [InlineKeyboardButton("📋 All Commands", callback_data="menu_commands")],
@@ -249,14 +253,14 @@ class EnhancedPaperProfitBot:
         reply_markup = InlineKeyboardMarkup(keyboard)
         
         await update.message.reply_text(
-            "🚀 **Welcome to Paper Profit Bot!**\n\n"
-            "AI-powered continuous risk-aware trading system.\n\n"
+            "🚀 **Welcome to XION Trade Bot!**\n\n"
+            "AI-powered risk-aware trading system.\n\n"
             "**📋 AVAILABLE COMMANDS:**\n\n"
             "**📊 Market Data:**\n"
             "`/price AAPL` - Real-time stock price\n\n"
             "**🤖 AI Analysis:**\n"
             "`/analyze AAPL momentum` - Strategy-specific AI analysis\n"
-            "`/strategies` - List all 28 trading strategies\n\n"
+            "`/strategies` - List all trading strategies\n\n"
             "**📈 Portfolio:**\n"
             "`/portfolio` - View portfolio with risk assessment\n"
             "`/alerts` - View current risk alerts\n"
@@ -762,10 +766,12 @@ Account: `{account_id}`
         """Run the bot"""
         if not BOT_TOKEN:
             print("❌ Error: TELEGRAM_BOT_TOKEN not set!")
+            print("   Please set it in your .env file")
             return
         
-        print("🤖 Starting Enhanced Paper Profit Bot...")
+        print("🤖 Starting XION Trade Bot...")
         print(f"📡 API URL: {API_BASE_URL}")
+        print(f"📱 Mini App URL: {MINI_APP_URL}")
         print("✅ Features: Real prices, Strategy-specific AI analysis")
         
         self.application = Application.builder().token(BOT_TOKEN).build()
@@ -997,7 +1003,7 @@ Account: `{account_id}`
 
 
 def main():
-    bot = EnhancedPaperProfitBot()
+    bot = XionTradeBot()
     bot.run()
 
 
