@@ -373,7 +373,7 @@ _Last updated: {datetime.now().strftime('%H:%M:%S')}_
         try:
             result = await self._run_strategy_analysis(symbol, stock_data, strategy)
             response = self._format_strategy_analysis(symbol, stock_data, strategy, result)
-            await msg.edit_text(response, parse_mode='Markdown')
+            await msg.edit_text(response)  # No parse_mode to avoid markdown issues
         except Exception as e:
             logger.error(f"Analysis error: {e}")
             await msg.edit_text(f"❌ Analysis error: {str(e)}")
@@ -514,6 +514,13 @@ REASONS:
         
         return result
 
+    def _escape_markdown(self, text: str) -> str:
+        """Escape special markdown characters for Telegram"""
+        # Escape underscores, asterisks, backticks that aren't part of our formatting
+        for char in ['_', '*', '`', '[', ']']:
+            text = text.replace(char, '\\' + char)
+        return text
+    
     def _format_strategy_analysis(
         self, 
         symbol: str, 
@@ -527,45 +534,49 @@ REASONS:
         
         risk_emoji = {"low": "🟢", "moderate": "🟡", "high": "🔴"}.get(strategy.risk_tolerance, "⚪")
         
-        reasons_text = "\n".join([f"  • {r}" for r in result['reasons'][:3]])
+        # Escape markdown in dynamic content
+        reasons_text = "\n".join([f"  • {self._escape_markdown(r)}" for r in result['reasons'][:3]])
+        entry_text = self._escape_markdown(strategy.entry_criteria[:100])
+        exit_text = self._escape_markdown(strategy.exit_criteria[:100])
+        strategy_name = self._escape_markdown(strategy.name)
         
         return f"""
-🤖 **Strategy Analysis: {symbol}**
+🤖 Strategy Analysis: {symbol}
 
-**📊 Strategy:** {strategy.name}
-**📁 Category:** {strategy.category}
-{risk_emoji} **Risk Level:** {strategy.risk_tolerance.title()}
-**⏱ Time Horizon:** {strategy.time_horizon.title()}
+📊 Strategy: {strategy_name}
+📁 Category: {strategy.category}
+{risk_emoji} Risk Level: {strategy.risk_tolerance.title()}
+⏱ Time Horizon: {strategy.time_horizon.title()}
 
 ━━━━━━━━━━━━━━━━━━━━━
 
-**💰 Real-Time Data:**
-• Price: **${stock_data['current_price']:.2f}**
+💰 Real-Time Data:
+• Price: ${stock_data['current_price']:.2f}
 • Day: {stock_data['day_change_pct']:+.2f}%
 • P/E: {stock_data['pe_ratio']:.2f}
 • 52W Range: ${stock_data['week_52_low']:.2f} - ${stock_data['week_52_high']:.2f}
 
 ━━━━━━━━━━━━━━━━━━━━━
 
-{signal_emoji} **SIGNAL: {signal}**
-📊 Confidence: **{result['confidence']:.0f}%**
+{signal_emoji} SIGNAL: {signal}
+📊 Confidence: {result['confidence']:.0f}%
 
-**📍 Trade Setup:**
+📍 Trade Setup:
 • Entry: ${result['entry_price']:.2f}
 • Stop Loss: ${result['stop_loss']:.2f}
 • Target: ${result['target_price']:.2f}
 • Position: {result['position_size']:.1f}% of portfolio
 
-**💡 Key Reasons:**
+💡 Key Reasons:
 {reasons_text}
 
 ━━━━━━━━━━━━━━━━━━━━━
 
-**📋 Strategy Rules:**
-_Entry:_ {strategy.entry_criteria[:100]}...
-_Exit:_ {strategy.exit_criteria[:100]}...
+📋 Strategy Rules:
+Entry: {entry_text}...
+Exit: {exit_text}...
 
-_Analysis: {datetime.now().strftime('%H:%M:%S')}_
+Analysis: {datetime.now().strftime('%H:%M:%S')}
         """.strip()
 
     async def list_strategies(self, update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
