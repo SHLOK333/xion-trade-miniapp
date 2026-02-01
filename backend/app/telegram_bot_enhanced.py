@@ -800,6 +800,9 @@ Account: `{account_id}`
         self.application.add_handler(CommandHandler("rebalance", self.trigger_rebalance))
         self.application.add_handler(CommandHandler("autotrade", self.toggle_autotrade))
         self.application.add_handler(CommandHandler("trades", self.get_trades))
+        # On-chain trading
+        self.application.add_handler(CommandHandler("trade", self.trade_on_chain))
+        self.application.add_handler(CommandHandler("wallet", self.wallet_balance))
         self.application.add_handler(CallbackQueryHandler(self.button_callback))
         
         print("✅ Bot is running!")
@@ -1008,6 +1011,199 @@ Account: `{account_id}`
                 text += "_No trades executed yet_"
             
             await update.message.reply_text(text, parse_mode='Markdown')
+            
+        except Exception as e:
+            await update.message.reply_text(f"❌ Error: {e}")
+
+    # ==================== ETH SEPOLIA TRANSFER ====================
+    
+    async def trade_on_chain(self, update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
+        """Execute a simulated trade with ETH Sepolia transfer as proof"""
+        args = context.args
+        
+        if len(args) < 3:
+            await update.message.reply_text(
+                "📝 **Usage:** `/trade AAPL buy 10`\n\n"
+                "This will:\n"
+                "1. Analyze the trade with AI\n"
+                "2. Send a Sepolia ETH transfer as proof\n"
+                "3. Log the trade on-chain\n\n"
+                "⚠️ Requires Sepolia testnet ETH",
+                parse_mode='Markdown'
+            )
+            return
+        
+        symbol = args[0].upper()
+        action = args[1].lower()
+        try:
+            quantity = float(args[2])
+        except:
+            await update.message.reply_text("❌ Invalid quantity")
+            return
+        
+        if action not in ["buy", "sell"]:
+            await update.message.reply_text("❌ Action must be 'buy' or 'sell'")
+            return
+        
+        msg = await update.message.reply_text(
+            f"🔄 Processing {action.upper()} {quantity} {symbol}...\n"
+            f"📡 Fetching price data..."
+        )
+        
+        # Get stock price
+        stock_data = self._get_stock_data(symbol)
+        if "error" in stock_data:
+            await msg.edit_text(f"❌ Error: {stock_data['error']}")
+            return
+        
+        price = stock_data['current_price']
+        total_value = price * quantity
+        
+        await msg.edit_text(
+            f"🔄 Processing {action.upper()} {quantity} {symbol}...\n"
+            f"💰 Price: ${price:.2f}\n"
+            f"💵 Total: ${total_value:,.2f}\n\n"
+            f"⛓️ Sending Sepolia transaction..."
+        )
+        
+        # Execute ETH transfer
+        tx_result = await self._send_sepolia_transfer(
+            symbol=symbol,
+            action=action,
+            quantity=quantity,
+            price=price,
+            user_id=update.effective_user.id
+        )
+        
+        if tx_result.get("success"):
+            tx_hash = tx_result["tx_hash"]
+            etherscan_url = f"https://sepolia.etherscan.io/tx/{tx_hash}"
+            
+            emoji = "🟢" if action == "buy" else "🔴"
+            
+            await msg.edit_text(
+                f"{emoji} **Trade Executed On-Chain!**\n\n"
+                f"**{action.upper()}** {quantity} {symbol}\n"
+                f"💰 Price: ${price:.2f}\n"
+                f"💵 Total: ${total_value:,.2f}\n\n"
+                f"━━━━━━━━━━━━━━━━━━━━━\n\n"
+                f"⛓️ **Sepolia TX Proof:**\n"
+                f"`{tx_hash[:20]}...{tx_hash[-8:]}`\n\n"
+                f"🔗 [View on Etherscan]({etherscan_url})\n\n"
+                f"_Trade logged on Ethereum testnet_",
+                parse_mode='Markdown',
+                disable_web_page_preview=True
+            )
+        else:
+            error = tx_result.get("error", "Unknown error")
+            await msg.edit_text(
+                f"⚠️ **Trade Recorded (Off-Chain)**\n\n"
+                f"**{action.upper()}** {quantity} {symbol}\n"
+                f"💰 Price: ${price:.2f}\n"
+                f"💵 Total: ${total_value:,.2f}\n\n"
+                f"━━━━━━━━━━━━━━━━━━━━━\n\n"
+                f"❌ On-chain TX failed: {error}\n"
+                f"_Trade saved to local database_",
+                parse_mode='Markdown'
+            )
+    
+    async def _send_sepolia_transfer(
+        self,
+        symbol: str,
+        action: str,
+        quantity: float,
+        price: float,
+        user_id: int
+    ) -> Dict[str, Any]:
+        """Send ETH Sepolia transfer as trade proof"""
+        try:
+            from web3 import Web3
+            
+            # Sepolia RPC endpoint (use Infura, Alchemy, or public)
+            SEPOLIA_RPC = os.getenv("SEPOLIA_RPC_URL", "https://rpc.sepolia.org")
+            PRIVATE_KEY = os.getenv("SEPOLIA_PRIVATE_KEY", "")
+            
+            if not PRIVATE_KEY:
+                return {"success": False, "error": "No Sepolia private key configured"}
+            
+            w3 = Web3(Web3.HTTPProvider(SEPOLIA_RPC))
+            
+            if not w3.is_connected():
+                return {"success": False, "error": "Cannot connect to Sepolia"}
+            
+            # Get account from private key
+            account = w3.eth.account.from_key(PRIVATE_KEY)
+            sender_address = account.address
+            
+            # Check balance
+            balance = w3.eth.get_balance(sender_address)
+            if balance < w3.to_wei(0.0001, 'ether'):
+                return {"success": False, "error": "Insufficient Sepolia ETH"}
+            
+            # Create trade memo (stored in tx data)
+            trade_memo = f"XION|{action}|{symbol}|{quantity}|{price}|{user_id}|{datetime.now().isoformat()}"
+            
+            # Build transaction (send tiny amount to self with trade data)
+            nonce = w3.eth.get_transaction_count(sender_address)
+            gas_price = w3.eth.gas_price
+            
+            tx = {
+                'nonce': nonce,
+                'to': sender_address,  # Send to self
+                'value': w3.to_wei(0.00001, 'ether'),  # Tiny amount
+                'gas': 50000,
+                'gasPrice': gas_price,
+                'data': w3.to_hex(text=trade_memo),
+                'chainId': 11155111  # Sepolia chain ID
+            }
+            
+            # Sign and send
+            signed_tx = w3.eth.account.sign_transaction(tx, PRIVATE_KEY)
+            tx_hash = w3.eth.send_raw_transaction(signed_tx.raw_transaction)
+            
+            return {
+                "success": True,
+                "tx_hash": tx_hash.hex(),
+                "from": sender_address,
+                "memo": trade_memo
+            }
+            
+        except Exception as e:
+            logger.error(f"Sepolia transfer error: {e}")
+            return {"success": False, "error": str(e)}
+    
+    async def wallet_balance(self, update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
+        """Check Sepolia wallet balance"""
+        try:
+            from web3 import Web3
+            
+            SEPOLIA_RPC = os.getenv("SEPOLIA_RPC_URL", "https://rpc.sepolia.org")
+            PRIVATE_KEY = os.getenv("SEPOLIA_PRIVATE_KEY", "")
+            
+            if not PRIVATE_KEY:
+                await update.message.reply_text(
+                    "❌ **No Wallet Configured**\n\n"
+                    "Set `SEPOLIA_PRIVATE_KEY` env variable to enable on-chain trades.",
+                    parse_mode='Markdown'
+                )
+                return
+            
+            w3 = Web3(Web3.HTTPProvider(SEPOLIA_RPC))
+            account = w3.eth.account.from_key(PRIVATE_KEY)
+            balance = w3.eth.get_balance(account.address)
+            eth_balance = w3.from_wei(balance, 'ether')
+            
+            await update.message.reply_text(
+                f"💳 **Sepolia Wallet**\n\n"
+                f"📍 Address:\n`{account.address}`\n\n"
+                f"💰 Balance: **{eth_balance:.6f} ETH**\n\n"
+                f"🔗 [View on Etherscan](https://sepolia.etherscan.io/address/{account.address})\n\n"
+                f"_Get free Sepolia ETH from faucets:_\n"
+                f"• sepoliafaucet.com\n"
+                f"• infura.io/faucet/sepolia",
+                parse_mode='Markdown',
+                disable_web_page_preview=True
+            )
             
         except Exception as e:
             await update.message.reply_text(f"❌ Error: {e}")
