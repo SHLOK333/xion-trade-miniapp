@@ -1,0 +1,100 @@
+strategies:
+  - index: buy_and_hold
+    category: Long Term
+    strategy: Buy & Hold
+    risk: Low
+    short_description: Buy quality assets and hold for years/decades.
+    timeframe: Years / decades
+    indicators: Fundamentals
+    entry_rules: Buy strong companies or index funds at fair value.
+    exit_rules: Sell only if fundamentals deteriorate.
+    parameters:
+      fundamental:
+        min_quality_score: 70
+        sell_on_fundamental_shift: true
+      technical:
+        max_drawdown: 30%
+        rebalance_interval_days: 365
+
+  - index: index_fund_investing
+    category: Long Term
+    strategy: Index Fund Investing
+    risk: Low
+    short_description: Invest in broad-market index ETFs for long-term growth.
+    timeframe: Years
+    indicators: None
+    entry_rules: Start anytime; DCA works well.
+    exit_rules: Hold indefinitely.
+    parameters:
+      fundamental:
+        allocation_percent: 100
+      technical:
+        dca_interval_days: 30
+        auto_rebalance: yearly
+        max_slippage: 0.5%
+
+  - index: dollar_cost_averaging
+    category: Long Term
+    strategy: Dollar-Cost Averaging
+    risk: Low
+    short_description: Invest fixed amounts regularly to smooth volatility.
+    timeframe: Long term
+    indicators: None
+    entry_rules: Invest fixed amounts at regular intervals.
+    exit_rules: No fixed exit.
+    parameters:
+      fundamental:
+        investment_amount: 100
+      technical:
+        investment_interval_days: 30
+        auto_buy: true
+
+  - index: dividend_growth_investing
+    category: Long Term
+    strategy: Dividend Growth Investing
+    risk: Low–Medium
+    short_description: Buy companies with consistent dividend increases.
+    timeframe: Years
+    indicators: Dividend history, payout ratio
+    entry_rules: Buy established dividend growers.
+    exit_rules: Sell if dividend is cut.
+    parameters:
+      fundamental:
+        min_dividend_growth_rate: 5%
+        max_payout_ratio: 70%
+        min_dividend_yield: 2%
+        auto_reinvest_dividends: true
+      technical:
+        rebalance_interval_days: 365
+
+  - index: value_investing
+    category: Long Term
+    strategy: Value Investing
+    risk: Medium
+    short_description: Buy undervalued stocks based on intrinsic value.
+    timeframe: Years
+    indicators: PE, PB, cash flow metrics
+    entry_rules: Enter below intrinsic value.
+    exit_rules: Exit at fair value.
+    parameters:
+      fundamental:
+        max_pe: 20
+        max_pb: 2
+        discount_to_intrinsic_value: 20%
+      technical:
+        rebalance_interval_days: 180
+
+  - index: growth_investing
+    category: Long Term
+    strategy: Growth Investing
+    risk: Medium–High
+    short_description: Invest in fast-growing companies.
+    timeframe: Years
+    indicators: Revenue and earnings growth
+    entry_rules: Buy early in growth cycle.
+    exit_rules: Sell on slowing growth.
+    parameters:
+      fundamental:
+        min_revenue_growth: 15%
+        min_eps_growth: 10%
+        max_pe_ratio: 70

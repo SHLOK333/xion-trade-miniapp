@@ -1,0 +1,100 @@
+- number: 1
+  title: Introduction to Financial Markets
+  summary: '### 1.1 What Is Investing? Investing is the process of putting money into
+    assets with the expectation that they will grow in value or generate income over
+    time. Instead of letting money sit idle, investing allows it to work for youby
+    owning part of a company, lending money to governments or corporations, or holding
+    assets that gain value.'
+  keywords:
+  - markets
+  - financial
+  - exist
+  - how
+  - introduction
+  - investing
+  - market
+  - participants
+  sections:
+  - title: What Is Investing?
+    number: '1.1'
+    keywords:
+    - investing
+    - money
+    - assets
+    - gain
+    - gambling
+    - generate
+    - grow
+    - income
+    content:
+      encoding: gzip+base64
+      data: H4sIAO9nKWkC/11SMY7bQAzs8wqWCaDYHxDcX5figNTUipYIr8jFLiWdujwiL8xLjiuffOc0AkTODDmcbdPlRRYqxjIAF7CRIGUNVAroFdJse2dSoQ1YTAFLISuwso07mt4SBUNjFf9Hq8XN2zHCkHV1EiwYZwLNMJBQRiMvBp28tFAG44lO8CLFCPs6NNLXoYUNuI/UOOlYFGPUtYB3fKFV8w2urr7p/O/P324DXaWiEmaregg+LKFsjUtL/ynt5KGuIBOJW3KJoDlp3s2UphZGjTvhw/VucMDD06k9p8u39r8bilbM1EX/P8HrqPMwQqd+L3egcSHIXG5f/Tipw0LuXiBTIcxhbGoOHXYc2Zh8G5Qeosrw0yhPQEFFJw6AwXhhc3PryJEek10oOq9KxjncdnoZNdudr7PVCMrDQlssu/rl97jBL9LkUndX7fmjc0fO0T+RL696z3cljG7tEWV79uaB6MjvxXKN+0mfWo+3kPy2vBxv4glT0Os12kExFvieyThTTasB6uewqzbuFCP4pq7mdQunH8+Tal5XFpTADmTpKfk7IAnHtLObegdmBdefCgMAAA==
+  - title: Why Financial Markets Exist
+    number: '1.2'
+    keywords:
+    - financial
+    - markets
+    - assets
+    - grow
+    - investors
+    - key
+    - risk
+    - transfer
+    content:
+      encoding: gzip+base64
+      data: H4sIAO9nKWkC/1VSwW7bMAy97yt4Dork3hm+FOhlG1AMBYYeFZu2iciiRlI2/PelEidoL5Igku/xPbLJ7SulkDoKEeYgFzSFs1AawXhEm1DgXDYUhZB6UIyxvnmA4VEWVL3qCO8Tbp4hC/q5oHjo4j+5SGZFfW5Ouf3R5LZRE05j+8uDryV1Rpy0Oe2/t6wS/YjUHg4vIZNVlhi5CzX3cHiGF55zSIQKEkgRZk6OZgyj8PoTKC2oxt6pawDOmcVKIqsFnoRBEghakaTH5uQ8O9lv+l+oJ9sqxwcX6EKq+h/id7GOoBS3b7VvQh1CT9qxi78i/NkN7dFQZkoIbigsIRasFu5YNgmXcQItOccbVY+zX9/g/5JewCQkHVAq+DtzVIh0QZerxSMdPsGZU69PO4jQ4o65FVf31i+2uAnOEEbvQx6oIM5xJz1dR5Dbf2QTF/sy731NnKuoa3IRCiuX6A6ZlHGMeB/ErQ9KPS3UlxDveVPwHRmCwICr065hu3Z0LuTBFUO06Vj34BP+caYUngIAAA==
+  - title: Understanding Market Participants
+    number: '1.3'
+    keywords:
+    - funds
+    - market
+    - buying
+    - firms
+    - investors
+    - markets
+    - participants
+    - amounts
+    content:
+      encoding: gzip+base64
+      data: H4sIAO9nKWkC/12SwW7bMAyG73sKHtdgSO6D4cOGBCiKYEW77c5YtE1EllSJcqad9hB7wj3JaDnZ0F5kSyI//vypJrTfMbLPCYLFQjEBO6GInegPyEjQs0PXMVpIJQlNW3hw/sJugMvol4gCGAlGsiEB/VCMJk4YzyRwohFn9nHb7EL7rgltkyR6N7THJegRo3DHAZ2kZne9WSOz1cVyu9k8kSBbuHczJfExbTYfYT9TLAaLSjQ8s8loE5xyWURpUHdOH+DkndHP/utBV5JOJSjvCr13SViysHf4hv1ILukx9LnmT1mUftuNZAZaN/Dn1++1+8nPBBaj3uDkszYDvtdTR+VV0U/ozgnQmWvBiZzAgeNU6x6wY8uCQiARzdLKEmrJLf+vQMfV3COeadVcISoGBUL0aojq4ZfMhqXAqUDntV912ZabSws6kbVv0U80ZIs3L77EAR3/xMWnBCl3I2Cqj+J5/xnef9s+b+9A/co6/x45Vqyqdynok9Du1meQbiV2dayh3aOSwv/pw6hYw31PNWvwyzyrRIUJDUzq/WVkzeoi6ckqwhSHE3d1ANXMxfZ/FUP7F1yrnrPdAgAA
+  - title: How Financial Markets Work
+    number: '1.4'
+    keywords:
+    - markets
+    - trading
+    - electronic
+    - goes
+    - more
+    - people
+    - price
+    - want
+    content:
+      encoding: gzip+base64
+      data: H4sIAO9nKWkC/32SQW7bQAxF9z0Fly1gxBcQBLQNusuqAbqmR4w1MDUcDEdW1FVXPUB7w5ykf+IkjoOgG2mg0X/8n2SX+8+V6ijkccoqXknlKLqhictBqpNlKVyFLJHPOetKnAYaZMLrqtvm/kM3Kx4a+x+jJJqsCGUxwGjhBLjRbm4qYnep9PD7D+USg9DexGnOoED8f4KL6lvlYEt61m4fPeT+tvCAq5FzBgme5T6MnPbiG1rGGEZiwIOkWljjTxkoKwcoPuZx9RhYyQqJSqjFUgyfoBIokECKP0ZvVto5WEr47YpubJCSXhrWCrBOhlaiTCyClp2BG9ypLTHtCRaSc6jRklMEIKpGF3AHf+ps7jtvun1/u2a4tDu6OZXptk8XlyP4Xi0cXqw8/PpLd8gD963gs/t29hE+/dz5L6h6oTvl3tsR2SYEOYUPNmVOEVZ2VootGFaS9Yz5atNkQ6zrBQtJh1a0MARYphJZnTQeWgEdNmRR23yE6xn1DWtw/y4mzKVICvG1/2tAj1zjEdbe1VgbecDXHTvGjtWYE+amp860zfRXu/QPuBaaZhgDAAA=
+  - title: Primary vs. Secondary Markets
+    number: '1.5'
+    keywords:
+    - company
+    - market
+    - secondary
+    - assets
+    - example
+    - here
+    - money
+    - primary
+    content:
+      encoding: gzip+base64
+      data: H4sIAO9nKWkC/42Sz2rDMAzG73sK3bbBaO8lBHYorIeuhW6HHV1bSUwT2VhK29z2EHvCPcnk9A+juwwCIZb0ffp+ThHLd3KYWAw5TzVI4xmcZ/FkxQcC/bSpt960s2Iay7silgVLClSX6+Q7kwZYmrRDKabn40vbW5bS59BgQqg8GcoyYJhRGIwe2oRG0IGaA4fWQRWSrpC7dSUQ3+HkIjc/mi62OINnsKGLhgZgbFsGlmB3IGEcjP229RY8qSYs1it4WJCXbLs+VVZVhUmTPl6FX3S9p3G4C4QD1AEzgoRW2uGie7ac3DLYoA3k/k3hV3ZJxuXoleCYebjfI2wRM3Lu0f0N/hF62PYDKKOcHLhRHQa9pLzhKx60I+1gM/KYH21jqMabmKeIpxKDvhyrqRxGX9qjwkz8/flFQUbVvEv+L27zL0O+H42Qi42JEYkz9TzDVybdyGQc+gGbU+LKagIAAA==
+- number: 2
+  title: Core Investment Instruments
+  summary: '### 2.1 What Is a Stock? A stock represents partial ownership of a company.
+    When you buy a share, you own a small piece of that business.'
+  keywords:
+  - funds
+  - what
+  - bond
+  - commodities
+  - core
+  - cryptocurrencies
+  - estate
+  - etfs
