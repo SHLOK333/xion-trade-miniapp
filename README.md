@@ -1,258 +1,343 @@
-# 📈 XION Trade Strategies
+# 🚀 XION Trade Strategies
 
-A comprehensive paper-trading platform that lets you learn by doing—teaching you about investing, trading, risk management, markets, portfolio management, and a wide range of investment strategies using real market data, all without risking real money. XION Trade Strategies allows you to simulate trading across multiple strategies, from long-term investing to day trading, with real market data.
+> **AI-Powered Risk-Aware Trading Platform** | Newton Hackathon 2026
 
-## 🚀 Features
-
-### Core Functionality
-- **Paper Trading**: Simulate buy/sell orders without real money
-- **Portfolio Management**: Track multiple accounts and positions
-- **Real Market Data**: Integration with Yahoo Finance, Alpha Vantage, and Financial Modeling Prep
-- **Automated Trading Bot**: Background jobs for order processing and strategy execution
-- **Performance Analytics**: Track your gains/losses and portfolio performance
-
-### 30+ Investment Strategies
-XION Trade Strategies includes implementation templates for various trading strategies across multiple categories:
-
-#### Long Term Strategies
-- Buy & Hold
-- Index Fund Investing
-- Dollar-Cost Averaging (DCA)
-- Dividend Growth Investing
-- Value Investing
-- Growth Investing
-- Sector Rotation
-- Asset Allocation & Rebalancing
-
-#### Swing Trading
-- Trend Following
-- Breakout Trading
-- Momentum Trading
-- Mean Reversion
-- RSI Overbought/Oversold
-
-#### Day Trading
-- Scalping
-- VWAP Strategy
-- Opening Range Breakout
-- News-Based Trading
-
-#### Options Trading
-- Covered Calls
-- Cash-Secured Puts
-- Iron Condor
-
-#### Famous Investor Strategies
-- Warren Buffett (Value Investing)
-- Ben Graham (Deep Value)
-- Peter Lynch (GARP)
-- Ray Dalio (All Weather Portfolio)
-- Jesse Livermore (Trend & Breakout)
-- John Bogle (Passive Index)
-- Stanley Druckenmiller (Macro Trend)
-- Jim Simons (Quantitative Statistical Arbitrage)
-
-### AI-Powered Analysis
-- Stock analysis using AI
-- Trading strategy generation
-- Market insights and sector analysis
-- Multi-stock comparison
-
-## 🛠️ Tech Stack
-
-### Backend
-- **Framework**: FastAPI
-- **Database**: SQLite with SQLAlchemy ORM
-- **Task Scheduling**: APScheduler
-- **Market Data**: yfinance, alpha_vantage
-- **Python**: 3.x
-
-### Frontend
-- **Framework**: Vue 3
-- **Build Tool**: Vite
-- **UI**: Custom components
-
-## 📋 Prerequisites
-
-- Python 3.8 or higher
-
-## 🔧 Installation
-
-### 1. Clone or download the code
-```bash
-git clone <repository-url>
-cd paper_profit
-```
-
-### 2. Run the Application
-
-```bash
-./start.sh
-```
-
-This will:
-- Create and activate a virtual environment
-- Install dependencies
-- Run database migrations (if needed)
-- Start the FastAPI server on port 5000
-- Start background jobs for order processing and market data updates
-
-### 3. Open your browser 
-
-Go to http://localhost:5000
-
-
-
-### Manual Start
-
-#### Backend API
-```bash
-cd backend/app
-python api.py
-```
-API will be available at `http://localhost:5000`  
-API documentation at `http://localhost:5000/docs`
-
-#### Background Jobs
-```bash
-cd backend/app
-python background.py
-```
-
-#### Frontend Development Server
-```bash
-cd frontend
-npm run dev
-```
-Frontend will be available at `http://localhost:5173`
-
-## 📁 Project Structure
-
-```
-xion_trade_strategies/
-├── backend/
-│   ├── app/
-│   │   ├── api.py                    # FastAPI application
-│   │   ├── main.py                   # CLI entry point
-│   │   ├── background.py             # Background job scheduler
-│   │   ├── analysis/                 # Technical & fundamental analysis
-│   │   ├── config/                   # YAML configuration files
-│   │   ├── jobs/                     # Scheduled jobs
-│   │   │   ├── trading_bot.py        # Main trading bot logic
-│   │   │   ├── process_orders.py     # Order execution
-│   │   │   ├── update_market_data.py # Market data updates
-│   │   │   └── update_positions.py   # Position updates
-│   │   ├── octopus/                  # External service integrations
-│   │   │   ├── ai_platforms/         # AI service providers
-│   │   │   ├── brokers/              # Broker integrations
-│   │   │   └── data_providers/       # Market data providers
-│   │   ├── services/                 # Business logic
-│   │   ├── storage/                  # Database models & repositories
-│   │   ├── tests/                    # Unit tests
-│   │   └── utils/                    # Utility functions
-│   ├── requirements.txt              # Python dependencies
-│   └── XionTrade.db                 # SQLite database
-├── frontend/
-│   ├── src/
-│   │   ├── components/              # Vue components
-│   │   ├── App.vue                  # Root component
-│   │   └── main.js                  # Entry point
-│   ├── package.json                 # Node dependencies
-│   └── vite.config.js              # Vite configuration
-├── start.sh                         # Quick start script
-└── README.md                        # This file
-```
-
-## 🔌 API Endpoints
-
-### Accounts
-- `GET /api/accounts` - List all accounts
-- `POST /api/accounts` - Create new account
-- `GET /api/accounts/{id}` - Get account details
-- `PUT /api/accounts/{id}` - Update account
-- `GET /api/accounts/{id}/summary` - Account summary with positions
-- `GET /api/accounts/{id}/portfolio` - Portfolio holdings
-- `GET /api/accounts/{id}/performance` - Performance metrics
-- `POST /api/accounts/{id}/buy` - Create buy order
-- `POST /api/accounts/{id}/sell` - Create sell order
-
-### Strategies
-- `GET /api/strategies` - List all strategies
-- `POST /api/strategies` - Create new strategy
-- `GET /api/strategies/{id}` - Get strategy details
-- `PUT /api/strategies/{id}` - Update strategy
-
-### Instruments
-- `GET /api/instruments/search?query={q}` - Search for stocks
-- `GET /api/instruments/get/{symbol}` - Get instrument details
-- `GET /api/instruments/{symbol}/market-data?period={p}` - Historical data
-
-### AI Analysis
-- `POST /api/ai/analyze-stock` - AI-powered stock analysis
-- `POST /api/ai/generate-strategy` - Generate trading strategy
-- `GET /api/ai/market-insights` - Market insights
-- `POST /api/ai/compare-stocks` - Compare multiple stocks
-
-### Configuration
-- `GET /api/settings` - Get settings
-- `GET /api/service-list` - Get service list
-- `GET /api/strategy-list` - Get strategy templates
-- `GET /api/guide` - Investment guide
-
-## ⚙️ Configuration
-
-### Strategy Configuration
-Edit strategy templates in:
-- `backend/app/config/strategy-list.yaml`
-- `backend/app/config/strategy-parameters.yaml`
-
-### Service Settings
-Configure data providers and services in:
-- `backend/app/config/service-list-settings.yaml`
-
-## 📊 Background Jobs
-
-The application runs several scheduled jobs:
-
-1. **Trading Bot** - Executes strategies and generates signals
-2. **Process Orders** - Processes pending orders
-3. **Update Market Data** - Fetches latest market prices
-4. **Update Positions** - Updates position valuations
-
-## 🔐 Database
-
-XION Trade Strategies uses SQLite for simplicity. The database is automatically created and migrated on first run.
-
-### Manual Migration
-```bash
-cd backend/app
-python main.py migrate
-```
-
-## 📝 License
-
-This project is for educational purposes. Use at your own risk. Past performance does not guarantee future results.
-
-## ⚠️ Disclaimer
-
-XION Trade Strategies is a **simulation platform** for educational purposes only. It does not execute real trades. Always do your own research and consult with financial advisors before making real investment decisions.
-
-## 🐛 Known Issues
-
-- Market data is delayed (not real-time)
-- Some advanced options strategies are templates only
-- AI features require API key
-
-## 🗺️ Roadmap
-
-- [ ] More broker integrations
-- [ ] Advanced charting and technical indicators
-- [ ] Risk management tools
-
-## 📞 Support
-
-For issues, questions, or contributions, please open an issue on GitHub.
+[![Telegram Bot](https://img.shields.io/badge/Telegram-Bot-blue?logo=telegram)](https://t.me/Paper_profit_bot)
+[![API Docs](https://img.shields.io/badge/API-Docs-green?logo=swagger)](https://your-railway-url.up.railway.app/docs)
+[![Mini App](https://img.shields.io/badge/Mini%20App-Live-purple)](https://shlok333.github.io/xion-trade-miniapp/)
 
 ---
 
-Made with ❤️ for traders and investors learning the markets.
+## 🎯 What is XION Trade Strategies?
+
+A **Telegram Mini App + AI-powered API** that brings institutional-grade trading analysis to everyone. Practice trading with real market data, get AI-driven signals, and learn risk management—all without risking real money.
+
+```
+┌─────────────────────────────────────────────────────────────┐
+│                    XION Trade Platform                       │
+├─────────────────────────────────────────────────────────────┤
+│                                                              │
+│   📱 Telegram Bot          🌐 Mini App           🔌 API     │
+│   ┌──────────────┐        ┌──────────────┐    ┌──────────┐  │
+│   │ /price AAPL  │        │  Dark UI     │    │ REST API │  │
+│   │ /analyze TSLA│   ←→   │  Portfolio   │ ←→ │ FastAPI  │  │
+│   │ /risk        │        │  Charts      │    │ OpenAPI  │  │
+│   └──────────────┘        └──────────────┘    └──────────┘  │
+│            │                     │                  │        │
+│            └─────────────────────┴──────────────────┘        │
+│                              │                               │
+│                    ┌─────────▼─────────┐                    │
+│                    │   🤖 AI Engine    │                    │
+│                    │  GPT-4 / Claude   │                    │
+│                    │  DeepSeek         │                    │
+│                    └─────────┬─────────┘                    │
+│                              │                               │
+│                    ┌─────────▼─────────┐                    │
+│                    │  📊 Market Data   │                    │
+│                    │  Yahoo Finance    │                    │
+│                    │  Alpha Vantage    │                    │
+│                    └───────────────────┘                    │
+└─────────────────────────────────────────────────────────────┘
+```
+
+---
+
+## 🔥 Key Features
+
+### 📱 Telegram Mini App
+Access the full trading terminal directly in Telegram:
+
+| Feature | Description |
+|---------|-------------|
+| 💼 **Portfolio View** | Track positions, P&L, and performance |
+| 📈 **Live Charts** | Real-time candlestick charts |
+| 🛒 **Trade Execution** | Buy/Sell with one tap |
+| 🎨 **Dark Terminal UI** | Professional trading interface |
+
+### 🤖 AI Trading Analysis
+
+```
+┌─────────────────────────────────────────────┐
+│              AI Analysis Flow               │
+├─────────────────────────────────────────────┤
+│                                             │
+│   User: /analyze TSLA value_investing       │
+│              │                              │
+│              ▼                              │
+│   ┌─────────────────────┐                  │
+│   │ 1. Fetch Live Data  │                  │
+│   │    - Price: $430    │                  │
+│   │    - P/E: 398       │                  │
+│   │    - 52W Range      │                  │
+│   └──────────┬──────────┘                  │
+│              ▼                              │
+│   ┌─────────────────────┐                  │
+│   │ 2. Apply Strategy   │                  │
+│   │    - Entry Rules    │                  │
+│   │    - Risk Params    │                  │
+│   │    - Position Size  │                  │
+│   └──────────┬──────────┘                  │
+│              ▼                              │
+│   ┌─────────────────────┐                  │
+│   │ 3. AI Analysis      │                  │
+│   │    - GPT-4 Prompt   │                  │
+│   │    - Signal Gen     │                  │
+│   └──────────┬──────────┘                  │
+│              ▼                              │
+│   🟢 BUY Signal | 85% Confidence           │
+│   Entry: $430 | Stop: $408 | Target: $515  │
+│                                             │
+└─────────────────────────────────────────────┘
+```
+
+### 📊 30+ Trading Strategies
+
+```
+┌────────────────────────────────────────────────────────────┐
+│                   Strategy Categories                       │
+├──────────────────┬──────────────────┬─────────────────────┤
+│   🏦 Long Term   │  📊 Swing Trade  │   ⚡ Day Trading    │
+├──────────────────┼──────────────────┼─────────────────────┤
+│ • Value Invest   │ • Trend Follow   │ • Scalping          │
+│ • Buy & Hold     │ • Breakout       │ • VWAP Strategy     │
+│ • DCA            │ • Momentum       │ • Opening Range     │
+│ • Dividend       │ • Mean Revert    │ • News Trading      │
+│ • Index Fund     │ • RSI Strategy   │ • Intraday Trends   │
+├──────────────────┴──────────────────┴─────────────────────┤
+│                 🏆 Legendary Investors                      │
+├───────────────────────────────────────────────────────────┤
+│ Warren Buffett • Ben Graham • Peter Lynch • Ray Dalio     │
+│ Jesse Livermore • John Bogle • Stanley Druckenmiller      │
+└───────────────────────────────────────────────────────────┘
+```
+
+---
+
+## 🚀 Quick Start
+
+### Option 1: Telegram Bot (Easiest!)
+
+1. Open [@Paper_profit_bot](https://t.me/Paper_profit_bot) in Telegram
+2. Send `/start` to begin
+3. Click **"📊 Open Mini App"** for the full trading terminal
+
+### Option 2: API Access
+
+```bash
+# Get stock price
+curl https://your-api.railway.app/api/instruments/get/AAPL
+
+# AI Stock Analysis
+curl -X POST https://your-api.railway.app/api/ai/analyze-stock \
+  -H "Content-Type: application/json" \
+  -d '{"symbol": "TSLA", "ai": "openai"}'
+
+# Get all strategies
+curl https://your-api.railway.app/api/strategies
+```
+
+---
+
+## 📡 API Reference
+
+### Base URL
+```
+https://your-railway-url.up.railway.app
+```
+
+### Core Endpoints
+
+| Endpoint | Method | Description |
+|----------|--------|-------------|
+| `/api/accounts` | GET | List all trading accounts |
+| `/api/accounts/{id}/portfolio` | GET | Get portfolio positions |
+| `/api/instruments/get/{symbol}` | GET | Get real-time stock data |
+| `/api/ai/analyze-stock` | POST | AI-powered stock analysis |
+| `/api/ai/generate-strategy` | POST | Generate trading strategy |
+| `/api/ai/market-insights` | GET | Market sector insights |
+| `/api/strategies` | GET | List trading strategies |
+
+### AI Analysis Request
+
+```json
+POST /api/ai/analyze-stock
+{
+  "symbol": "AAPL",
+  "analysis_type": "comprehensive",
+  "ai": "openai"
+}
+```
+
+### Response
+
+```json
+{
+  "symbol": "AAPL",
+  "signal": "BUY",
+  "confidence": 85,
+  "entry_price": 185.50,
+  "stop_loss": 176.22,
+  "target_price": 210.00,
+  "position_size": "5%",
+  "reasons": [
+    "Strong technical breakout above resistance",
+    "Positive earnings momentum",
+    "Healthy cash flow generation"
+  ]
+}
+```
+
+📚 **Full API Docs**: [/docs](https://your-railway-url.up.railway.app/docs)
+
+---
+
+## 🛠️ Tech Stack
+
+```
+┌─────────────────────────────────────────────────────────────┐
+│                      Architecture                            │
+├─────────────────────────────────────────────────────────────┤
+│                                                              │
+│  Frontend (Mini App)          Backend (API)                 │
+│  ┌─────────────────┐         ┌─────────────────┐           │
+│  │ Vue 3 + Vite    │         │ FastAPI         │           │
+│  │ Tailwind CSS    │   ──▶   │ SQLAlchemy      │           │
+│  │ Chart.js        │         │ yfinance        │           │
+│  └─────────────────┘         └─────────────────┘           │
+│                                      │                      │
+│  Telegram Bot                        ▼                      │
+│  ┌─────────────────┐         ┌─────────────────┐           │
+│  │ python-telegram │         │ AI Services     │           │
+│  │ -bot v22        │         │ • OpenAI GPT-4  │           │
+│  │                 │   ──▶   │ • Claude        │           │
+│  └─────────────────┘         │ • DeepSeek      │           │
+│                              └─────────────────┘           │
+│                                                              │
+│  Hosting                                                    │
+│  ┌─────────────────┐  ┌─────────────────┐                  │
+│  │ GitHub Pages    │  │ Railway         │                  │
+│  │ (Mini App)      │  │ (Bot + API)     │                  │
+│  └─────────────────┘  └─────────────────┘                  │
+│                                                              │
+└─────────────────────────────────────────────────────────────┘
+```
+
+---
+
+## 🏃 Running Locally
+
+### Prerequisites
+- Python 3.10+
+- Node.js 20+
+- OpenAI API Key (for AI features)
+
+### Backend
+
+```bash
+cd backend/app
+pip install -r requirements.txt
+
+# Set environment variables
+export TELEGRAM_BOT_TOKEN=your_token
+export OPENAI_API_KEY=your_key
+
+# Run API server
+uvicorn api:app --host 0.0.0.0 --port 5000 --reload
+
+# Or run Telegram bot
+python telegram_bot_enhanced.py
+```
+
+### Frontend (Mini App)
+
+```bash
+cd miniapp
+npm install
+npm run dev
+# Opens at http://localhost:3000
+```
+
+### Main Dashboard
+
+```bash
+cd frontend
+npm install
+npm run dev
+# Opens at http://localhost:5173
+```
+
+---
+
+## 📱 Telegram Bot Commands
+
+| Command | Description |
+|---------|-------------|
+| `/start` | Start the bot, open Mini App |
+| `/price AAPL` | Get real-time stock price |
+| `/analyze TSLA momentum` | AI analysis with strategy |
+| `/strategies` | List all trading strategies |
+| `/risk` | Portfolio risk assessment |
+| `/help` | Show all commands |
+
+---
+
+## 🔐 Environment Variables
+
+```env
+# Required
+TELEGRAM_BOT_TOKEN=your_bot_token
+OPENAI_API_KEY=your_openai_key
+
+# Optional
+ALPHA_VANTAGE_API_KEY=your_key
+MINI_APP_URL=https://shlok333.github.io/xion-trade-miniapp/
+```
+
+---
+
+## 📊 Risk Management
+
+```
+┌──────────────────────────────────────────────────────────┐
+│                  Risk Assessment                          │
+├──────────────────────────────────────────────────────────┤
+│                                                           │
+│   Portfolio Value: $100,000                              │
+│                                                           │
+│   ┌─────────────┐  ┌─────────────┐  ┌─────────────┐     │
+│   │ Beta: 1.2   │  │ VaR: 2.5%   │  │ Sharpe: 1.8 │     │
+│   │ ⚠️ Moderate │  │ 📉 $2,500   │  │ ✅ Good     │     │
+│   └─────────────┘  └─────────────┘  └─────────────┘     │
+│                                                           │
+│   Position Limits:                                       │
+│   ├── Max Single Position: 10%                          │
+│   ├── Max Sector Exposure: 30%                          │
+│   └── Stop Loss Required: ✅                            │
+│                                                           │
+│   AI Recommendation:                                     │
+│   "Reduce tech exposure by 5%, add defensive stocks"    │
+│                                                           │
+└──────────────────────────────────────────────────────────┘
+```
+
+---
+
+## 🏆 Team XION
+
+Built with ❤️ for **Newton Hackathon 2026**
+
+| Member | Role |
+|--------|------|
+| SHLOK | Lead Developer |
+
+---
+
+## 📄 License
+
+MIT License - See [LICENSE](LICENSE) for details.
+
+---
+
+<p align="center">
+  <b>🚀 Trade Smarter with AI • Practice Without Risk 📈</b>
+</p>
