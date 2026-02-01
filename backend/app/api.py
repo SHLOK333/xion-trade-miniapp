@@ -35,7 +35,54 @@ def get_ai_service(ai_platform: str, db_session: Session):
         raise ValueError(f"Unsupported AI platform: {ai_platform}. Supported platforms: claude, deepseek, openai")
 
 
-app = FastAPI(title="PaperProfit API", version="1.0.0")
+# Custom API description with markdown
+api_description = """
+# 🚀 XION Trade Strategies API
+
+**AI-Powered Risk-Aware Trading Platform for Smart Investors**
+
+## Features
+
+* 🤖 **AI Trading Analysis** - Get intelligent buy/sell signals powered by GPT-4
+* 📊 **Real-Time Market Data** - Live stock prices from Yahoo Finance
+* 💼 **Portfolio Management** - Track positions, orders, and performance
+* ⚠️ **Risk Assessment** - AI-powered portfolio risk analysis
+* 📈 **Strategy Templates** - Pre-built strategies from legendary investors
+
+## Quick Start
+
+1. Create an account with `/api/accounts`
+2. Get stock prices with `/api/market/price/{symbol}`
+3. Run AI analysis with `/api/ai/analyze`
+4. Execute trades with `/api/orders`
+
+---
+*Built for Newton Hackathon 2026 by Team XION*
+"""
+
+app = FastAPI(
+    title="XION Trade Strategies",
+    description=api_description,
+    version="1.0.0",
+    docs_url="/docs",
+    redoc_url="/redoc",
+    openapi_tags=[
+        {"name": "Accounts", "description": "Manage trading accounts"},
+        {"name": "Portfolio", "description": "View positions and performance"},
+        {"name": "Market", "description": "Real-time market data"},
+        {"name": "Orders", "description": "Place and manage orders"},
+        {"name": "AI Analysis", "description": "AI-powered trading signals"},
+        {"name": "Strategies", "description": "Trading strategy templates"},
+    ],
+    swagger_ui_parameters={
+        "deepLinking": True,
+        "displayRequestDuration": True,
+        "docExpansion": "list",
+        "operationsSorter": "method",
+        "filter": True,
+        "syntaxHighlight.theme": "monokai",
+    }
+)
 
 # Enable CORS for all routes
 app.add_middleware(
@@ -58,9 +105,9 @@ if images_path.exists():
     app.mount("/images", StaticFiles(directory=images_path), name="images")
 
 
-@app.get("/api/accounts", response_model=List[Dict[str, Any]])
+@app.get("/api/accounts", response_model=List[Dict[str, Any]], tags=["Accounts"])
 async def get_all_accounts(db: Session = Depends(get_db)):
-    """Get all accounts"""
+    """Get all trading accounts with portfolio summary"""
     try:
         account_service = AccountService(db)
         accounts = account_service.get_all_accounts()
@@ -118,7 +165,7 @@ async def get_all_accounts(db: Session = Depends(get_db)):
         )
 
 
-@app.get("/api/accounts/{account_id}", response_model=Dict[str, Any])
+@app.get("/api/accounts/{account_id}", response_model=Dict[str, Any], tags=["Accounts"])
 async def get_account(account_id: str, db: Session = Depends(get_db)):
     """Get account by ID"""
     try:
@@ -151,7 +198,7 @@ async def get_account(account_id: str, db: Session = Depends(get_db)):
         )
 
 
-@app.post("/api/accounts", response_model=Dict[str, Any])
+@app.post("/api/accounts", response_model=Dict[str, Any], tags=["Accounts"])
 async def create_account(account_data: Dict[str, Any], db: Session = Depends(get_db)):
     """Create a new account"""
     try:
@@ -189,7 +236,7 @@ async def create_account(account_data: Dict[str, Any], db: Session = Depends(get
         )
 
 
-@app.put("/api/accounts/{account_id}", response_model=Dict[str, Any])
+@app.put("/api/accounts/{account_id}", response_model=Dict[str, Any], tags=["Accounts"])
 async def update_account(account_id: str, account_data: Dict[str, Any], db: Session = Depends(get_db)):
     """Update an existing account"""
     try:
@@ -285,7 +332,7 @@ async def sell_asset(account_id: str, order_data: Dict[str, Any], db: Session = 
         )
 
 
-@app.get("/api/accounts/{account_id}/portfolio", response_model=Dict[str, Any])
+@app.get("/api/accounts/{account_id}/portfolio", response_model=Dict[str, Any], tags=["Portfolio"])
 async def get_account_portfolio(account_id: str, db: Session = Depends(get_db)):
     """Get account portfolio holdings"""
     try:
@@ -304,7 +351,7 @@ async def get_account_portfolio(account_id: str, db: Session = Depends(get_db)):
         )
 
 
-@app.get("/api/accounts/{account_id}/performance", response_model=Dict[str, Any])
+@app.get("/api/accounts/{account_id}/performance", response_model=Dict[str, Any], tags=["Portfolio"])
 async def get_account_performance(account_id: str, db: Session = Depends(get_db)):
     """Get account performance metrics"""
     try:
@@ -323,9 +370,9 @@ async def get_account_performance(account_id: str, db: Session = Depends(get_db)
         )
 
 
-@app.get("/api/strategies", response_model=List[Dict[str, Any]])
+@app.get("/api/strategies", response_model=List[Dict[str, Any]], tags=["Strategies"])
 async def get_all_strategies(db: Session = Depends(get_db)):
-    """Get all strategies"""
+    """Get all trading strategies"""
     try:
         repo_factory = RepositoryFactory(db)
         strategies = repo_factory.strategies.get_all()
@@ -350,7 +397,7 @@ async def get_all_strategies(db: Session = Depends(get_db)):
         )
 
 
-@app.post("/api/strategies", response_model=Dict[str, Any])
+@app.post("/api/strategies", response_model=Dict[str, Any], tags=["Strategies"])
 async def create_strategy(strategy_data: Dict[str, Any], db: Session = Depends(get_db)):
     """Create a new strategy"""
     try:
@@ -728,7 +775,7 @@ async def delete_setting(name: str, db: Session = Depends(get_db)):
         )
 
 
-@app.get("/api/instruments/search", response_model=List[Dict[str, Any]])
+@app.get("/api/instruments/search", response_model=List[Dict[str, Any]], tags=["Market"])
 async def search_instruments(query: str, limit: int = 20):
     """Search for instruments by query string"""
     try:
@@ -767,7 +814,7 @@ async def search_instruments(query: str, limit: int = 20):
         )
 
 
-@app.get("/api/instruments/get/{symbol}", response_model=Dict[str, Any])
+@app.get("/api/instruments/get/{symbol}", response_model=Dict[str, Any], tags=["Market"])
 async def get_instrument(symbol: str, db: Session = Depends(get_db)):
     """Get instrument data by symbol using Yahoo Finance"""
     try:
@@ -1010,9 +1057,9 @@ async def get_guide():
         )
 
 
-@app.post("/api/ai/analyze-stock", response_model=Dict[str, Any])
+@app.post("/api/ai/analyze-stock", response_model=Dict[str, Any], tags=["AI Analysis"])
 async def analyze_stock_with_ai(analysis_request: Dict[str, Any], db: Session = Depends(get_db)):
-    """Analyze a stock using AI (claude, deepseek, or openai)"""
+    """🤖 Analyze a stock using AI (GPT-4, Claude, or DeepSeek)"""
     try:
         symbol = analysis_request.get('symbol')
         analysis_type = analysis_request.get('analysis_type', 'comprehensive')
@@ -1052,9 +1099,9 @@ async def analyze_stock_with_ai(analysis_request: Dict[str, Any], db: Session = 
         )
 
 
-@app.post("/api/ai/generate-strategy", response_model=Dict[str, Any])
+@app.post("/api/ai/generate-strategy", response_model=Dict[str, Any], tags=["AI Analysis"])
 async def generate_trading_strategy(strategy_request: Dict[str, Any], db: Session = Depends(get_db)):
-    """Generate trading strategy using AI (claude, deepseek, or openai)"""
+    """🧠 Generate AI-powered trading strategy"""
     try:
         symbol = strategy_request.get('symbol')
         timeframe = strategy_request.get('timeframe', 'short_term')
@@ -1094,9 +1141,9 @@ async def generate_trading_strategy(strategy_request: Dict[str, Any], db: Sessio
         )
 
 
-@app.get("/api/ai/market-insights", response_model=Dict[str, Any])
+@app.get("/api/ai/market-insights", response_model=Dict[str, Any], tags=["AI Analysis"])
 async def get_market_insights(sector: str = None, ai: str = "deepseek", db: Session = Depends(get_db)):
-    """Get market insights using AI (claude, deepseek, or openai)"""
+    """📈 Get AI-powered market insights by sector"""
     try:
         # Get the appropriate AI service
         ai_service = get_ai_service(ai, db)
@@ -1126,9 +1173,9 @@ async def get_market_insights(sector: str = None, ai: str = "deepseek", db: Sess
         )
 
 
-@app.post("/api/ai/compare-stocks", response_model=Dict[str, Any])
+@app.post("/api/ai/compare-stocks", response_model=Dict[str, Any], tags=["AI Analysis"])
 async def compare_stocks_with_ai(comparison_request: Dict[str, Any], db: Session = Depends(get_db)):
-    """Compare multiple stocks using AI (claude, deepseek, or openai)"""
+    """⚖️ Compare multiple stocks using AI analysis"""
     try:
         symbols = comparison_request.get('symbols', [])
         comparison_type = comparison_request.get('comparison_type', 'performance')
